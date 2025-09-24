@@ -1,0 +1,221 @@
+# Config [Define global metadata for your documentation]
+
+Muni uses a [configuration file (`muni.config.ts`)](/docs/structure#configuration-file) to define global metadata for your documentation. This includes things like the site title, description, logo, sidebar, and more for your project.
+
+## Initialize Config File
+
+The Muni config can be defined in a `muni.config.ts` file at the root of your project.
+
+:::code-group
+
+```md [Directory Structure]
+viem/
+├── docs/
+├── node_modules/
+├── src/
+├── package.json
+└── muni.config.ts # [!code ++]
+```
+
+```ts [muni.config.ts] twoslash
+import { defineConfig } from "muni";
+
+export default defineConfig({
+  title: "Viem",
+});
+```
+
+:::
+
+## Parameters
+
+### basePath
+
+- **Type:** `string`
+
+The base path the documentation will be deployed at. All assets & pages will be prefixed with this path.
+
+For example, this is useful for deploying to GitHub Pages.
+If the target URL is `https://example.github.io/foo`, then the `basePath` should be set to `/foo`.
+
+```ts twoslash
+import { defineConfig } from "muni";
+
+export default defineConfig({
+  basePath: "/docs", // [!code focus]
+});
+```
+
+### baseUrl
+
+- **Type:** `string`
+
+The base URL for your documentation. This is used to populate the `<base>` tag in the `<head>` of the page,
+and is used to form the `%logo` variable for dynamic OG images.
+
+```ts twoslash
+import { defineConfig } from "muni";
+
+export default defineConfig({
+  baseUrl: "https://muni.dev", // [!code focus]
+});
+```
+
+### description
+
+- **Type:** `string`
+
+General description for the documentation.
+
+```ts twoslash
+import { defineConfig } from "muni";
+
+export default defineConfig({
+  description:
+    "Build reliable apps & libraries with lightweight, composable, and type-safe modules that interface with Ethereum.", // [!code focus]
+  title: "Viem",
+});
+```
+
+### rootDir
+
+- **Type:** `string`
+- **Default:** `"docs"`
+
+Documentation root directory. Can be an absolute path, or a path relative from the location of the config file itself.
+
+```tsx twoslash
+import { defineConfig } from "muni";
+
+export default defineConfig({
+  rootDir: "site", // [!code focus]
+  title: "Viem",
+});
+```
+
+### pages
+
+- **Type:** `Pages`
+
+Navigation displayed on the sidebar.
+
+```tsx twoslash
+import { defineConfig } from "muni";
+
+export default defineConfig({
+  pages: [
+    // [!code focus]
+    {
+      // [!code focus]
+      text: "Getting Started", // [!code focus]
+      link: "/docs", // [!code focus]
+    }, // [!code focus]
+    {
+      // [!code focus]
+      text: "API", // [!code focus]
+      collapsed: true, // [!code focus]
+      items: [
+        // [!code focus]
+        {
+          // [!code focus]
+          text: "Config", // [!code focus]
+          link: "/docs/api/config", // [!code focus]
+        }, // [!code focus]
+      ], // [!code focus]
+    }, // [!code focus]
+  ], // [!code focus]
+  title: "Viem",
+});
+```
+
+You can also specify an object for the sidebar with paths as keys and sidebar items as values.
+
+This will render a different sidebar depending on the path the user is on.
+
+```tsx twoslash
+import { defineConfig } from "muni";
+
+export default defineConfig({
+  sidebar: {
+    // [!code focus]
+    "/guide": [
+      {
+        // [!code focus]
+        text: "Getting Started", // [!code focus]
+        link: "/guide", // [!code focus]
+      },
+    ], // [!code focus]
+    "/api": [
+      {
+        // [!code focus]
+        text: "Config", // [!code focus]
+        link: "/api/config", // [!code focus]
+      },
+    ], // [!code focus]
+  }, // [!code focus]
+  title: "Viem",
+});
+```
+
+### sponsors
+
+- **Type:** `SponsorSet`
+
+Set of sponsors to display on MDX directives and (optionally) the sidebar.
+
+```tsx twoslash
+import { defineConfig } from "muni";
+
+export default defineConfig({
+  sponsors: [
+    // [!code focus]
+    {
+      // [!code focus]
+      name: "Collaborator", // [!code focus]
+      height: 120, // [!code focus]
+      items: [
+        // [!code focus]
+        [
+          // [!code focus]
+          {
+            // [!code focus]
+            name: "Paradigm", // [!code focus]
+            link: "https://paradigm.xyz", // [!code focus]
+            // [!code focus]
+            image:
+              "https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/paradigm-light.svg", // [!code focus]
+          }, // [!code focus]
+        ], // [!code focus]
+      ], // [!code focus]
+    }, // [!code focus]
+    {
+      // [!code focus]
+      name: "Large Enterprise", // [!code focus]
+      height: 60, // [!code focus]
+      items: [
+        // [!code focus]
+        [
+          // [!code focus]
+          {
+            // [!code focus]
+            name: "WalletConnect", // [!code focus]
+            link: "https://walletconnect.com", // [!code focus]
+            // [!code focus]
+            image:
+              "https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/walletconnect-light.svg", // [!code focus]
+          }, // [!code focus]
+          {
+            // [!code focus]
+            name: "Stripe", // [!code focus]
+            link: "https://www.stripe.com", // [!code focus]
+            // [!code focus]
+            image:
+              "https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/stripe-light.svg", // [!code focus]
+          }, // [!code focus]
+        ], // [!code focus]
+      ], // [!code focus]
+    }, // [!code focus]
+  ], // [!code focus]
+  title: "Viem",
+});
+```

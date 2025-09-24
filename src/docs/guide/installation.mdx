@@ -1,0 +1,57 @@
+export const frontmatter = {
+  title: "Installation",
+  description: "Set up your development environment",
+  category: "Guide",
+  lastModified: "2024-01-14",
+  readTime: "5 min",
+};
+
+# Installation
+
+Get your MDX documentation site running in minutes.
+
+## Prerequisites
+
+Make sure you have these installed:
+
+- Node.js 18+ (LTS recommended)
+- npm, yarn, or pnpm
+- Git
+
+## Quick Start
+
+Install dependencies and start developing:
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## Vite Configuration
+
+Add MDX support to your `vite.config.ts`:
+
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import mdx from "@mdx-js/rollup";
+
+export default defineConfig({
+  plugins: [
+    react(),
+    mdx({
+      remarkPlugins: [],
+      rehypePlugins: [],
+    }),
+  ],
+  optimizeDeps: {
+    include: ["@mdx-js/react"],
+  },
+});
+```
