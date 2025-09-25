@@ -1,5 +1,5 @@
 import { ArrowRight, Home } from "lucide-react";
-import { DocsButton } from "../mdx-components/docs-button";
+import { DocsButton } from "./docs-button";
 
 export function Homepage() {
   return (

@@ -29,7 +29,6 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement;
-
     root.classList.remove("light", "dark");
 
     if (theme === "system") {
@@ -38,10 +37,12 @@ export function ThemeProvider({
         ? "dark"
         : "light";
 
+      document.documentElement.setAttribute("data-theme", systemTheme);
       root.classList.add(systemTheme);
       return;
     }
 
+    document.documentElement.setAttribute("data-theme", theme);
     root.classList.add(theme);
   }, [theme]);
 

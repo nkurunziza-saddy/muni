@@ -1,0 +1,17 @@
+html[data-theme="dark"] .shiki,
+html[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark, var(--shiki-light)) !important;
+  background-color: var(--shiki-dark-bg, var(--shiki-light-bg)) !important;
+  font-style: var(
+    --shiki-dark-font-style,
+    var(--shiki-light-font-style)
+  ) !important;
+  font-weight: var(
+    --shiki-dark-font-weight,
+    var(--shiki-light-font-weight)
+  ) !important;
+  text-decoration: var(
+    --shiki-dark-text-decoration,
+    var(--shiki-light-text-decoration)
+  ) !important;
+}

@@ -14,6 +14,7 @@ const muniConfig = {
         { title: "Installation", slug: "guide/installation" },
         { title: "Components", slug: "guide/components" },
         { title: "Code Snippets", slug: "guide/code-snippets" },
+        { title: "Code Block", slug: "guide/code-block" },
       ],
     },
     {
