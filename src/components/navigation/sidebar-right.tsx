@@ -15,8 +15,8 @@ export function SidebarRight({ headings }: { headings: any[] }) {
       <SidebarContent className="px-0">
         {headings.length > 0 && (
           <SidebarMenu className="px-0 space-y-2">
-            {headings.map((heading) => (
-              <SidebarMenuItem key={heading.id} className="">
+            {headings.map((heading, i) => (
+              <SidebarMenuItem key={heading.id + i.toString()} className="">
                 <a
                   href={`#${heading.id}`}
                   className={`

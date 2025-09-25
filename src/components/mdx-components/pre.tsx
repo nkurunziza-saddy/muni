@@ -16,10 +16,12 @@ import { cn } from "@/lib/utils.js";
 export function Pre({
   children,
   className,
+  isTabContent = false,
   ...props
 }: DetailedHTMLProps<HTMLAttributes<HTMLPreElement>, HTMLPreElement> & {
   "data-lang"?: string;
   "data-title"?: string;
+  isTabContent?: boolean;
 }) {
   const { copied, copy, ref } = useCopyCode();
 
@@ -47,7 +49,7 @@ export function Pre({
     if (className?.includes("shiki")) {
       return (
         <CodeBlock className="">
-          {props["data-title"] && (
+          {props["data-title"] && !isTabContent && (
             <CodeTitle language={props["data-lang"]}>
               {props["data-title"]}
             </CodeTitle>
@@ -63,7 +65,11 @@ export function Pre({
     <IsInCodeBlockContext.Provider value={true}>
       {wrap(
         <div className="relative">
-          <pre ref={ref} {...props} className={cn(className, "p-2")}>
+          <pre
+            ref={ref}
+            {...props}
+            className={cn(className, "p-2 overflow-auto")}
+          >
             <CopyButton copied={copied} copy={copy} />
             {children_}
           </pre>

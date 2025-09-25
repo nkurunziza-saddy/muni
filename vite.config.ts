@@ -87,7 +87,7 @@ export default defineConfig({
               dark: "github-dark-dimmed",
               light: "vitesse-light",
             },
-            defaultColor: "light-dark()",
+            defaultColor: "light",
             transformers: [
               transformerLineNumbers(),
               transformerNotationDiff(),
@@ -111,7 +111,7 @@ export default defineConfig({
               dark: "github-dark",
               light: "github-light",
             },
-            defaultColor: "light-dark()",
+            defaultColor: "light",
           },
         ],
         rehypeShikiDisplayNotation,
