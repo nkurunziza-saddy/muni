@@ -1,121 +1,127 @@
-# Getting Started
+---
+outline: deep
+---
 
-## Overview
+# Shiki Transformers — Demo & Guide
 
-Vocs is a [React](https://react.dev)-based static documentation generator, powered by [Vite](https://vitejs.dev).
+A practical MDX page that shows the **transformers** from `@shikijs/transformers` when used via `@shikijs/rehype`. Includes copy-paste examples (MDX snippets), expected HTML output, CSS you can drop into Tailwind, and troubleshooting steps.
 
-Write your content in [Markdown](https://en.wikipedia.org/wiki/Markdown) or [MDX](https://mdxjs.com/), and Vocs will generate a static site with a default theme.
+---
 
-## Quick Start
+## Quick summary (TL;DR)
 
-### Bootstrap via CLI
+- **If your transformers "don't work"**: 90% chance the notation is escaped by remark/MDX or you haven't added styles. Use `transformerRemoveNotationEscape()` and add CSS for the classes the transformers add.
+- Use `matchAlgorithm: 'v3'` for more intuitive single-line comment matching.
+- Transformers only add classes — **you must style them**.
 
-Scaffold a new project with the command line:
+---
 
-:::code-group
+## Rehype config (what to use in `vite.config.ts` / MDX pipeline)
 
-```bash [npm]
-npm init vocs
+```ts
+// Example snippet to use inside your mdx rehypePlugins array
+import { transformerRemoveNotationEscape } from "@shikijs/transformers";
+
+[
+  rehypeShiki,
+  {
+    themes: { dark: "vitesse-dark", light: "vitesse-light" },
+    defaultColor: "light",
+    transformers: [
+      // Must be first if your MDX escapes notations
+      transformerRemoveNotationEscape(),
+
+      // Housekeeping and helpers (example order)
+      transformerLineNumbers(),
+
+      // Notation transformers (force v3 for better single-line semantics)
+      transformerNotationDiff({ matchAlgorithm: "v3" }),
+      transformerNotationFocus({ matchAlgorithm: "v3" }),
+      transformerNotationHighlight({ matchAlgorithm: "v3" }),
+      transformerNotationWordHighlight(),
+
+      // Project-specific helpers
+      transformerNotationInclude({ rootDir: path.resolve(__dirname, "./src") }),
+      transformerEmptyLine(),
+      transformerTagLine(),
+      transformerTitle(),
+      transformerSplitIdentifiers(),
+    ],
+  },
+];
 ```
 
-```bash [pnpm]
-pnpm create vocs
+> Put `transformerRemoveNotationEscape()` **first** (or very early). If you have custom transformers that rely on the unescaped `// [!code ...]` notation, they will fail unless the escape transformer runs.
+
+---
+
+## Transformers i used
+
+### 1) Diff notation — `++` (added) and `--` (removed)
+
+````mdx
+```js
+console.log("old"); // [!code --]
+console.log("new"); // [!code ++]
+console.log("same");
+```
+````
+
+**What it does**: marks lines as added/removed via classes `diff add` and `diff remove` on the line `<span>`s and adds `has-diff` to the outer `<pre>`.
+
+**Expected output snippet (HTML-ish)**
+
+```html
+<pre class="shiki has-diff">
+  <code>
+    <span class="line diff remove">console.log('old')</span>
+    <span class="line diff add">console.log('new')</span>
+    <span class="line">console.log('same')</span>
+  </code>
+</pre>
 ```
 
-```bash [yarn]
-yarn create vocs
+### 2) Line highlight — `highlight`
+
+````mdx
+```ts
+// [!code highlight:2]
+console.log("highlighted"); // Here span tag has `line`, `highlighted`
+console.log("also highlighted"); // Here span tag has `line`, `highlighted`
+console.log("not highlighted"); // Here span tag has `line`
 ```
+````
 
-```bash [bun]
-bun create vocs
+**What it does**: wraps the matched lines with `class="line highlighted"` and sets `has-highlighted` on the `<pre>`.
+
+### 3) Word highlight — `word:Hello` (scoped lines optional)
+
+````mdx
+```js
+// [\!code word:Hello]
+const message = "Hello world"; // span with hello has class `highlighted-word`
+console.log(message); // prints Hello
 ```
+````
 
-:::
+**What it does**: replaces matched wo
 
-### Bootstrap via Vercel
+### 3) Line focus
 
-Scaffold a new project and deploy it instantly with Vercel:
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwevm%2Fvocs%2Ftree%2Fmain%2Fcreate-vocs%2Ftemplates%2Fdefault)
-
-## Manual Installation
-
-You can install Vocs in an existing project, or start from scratch, by installing Vocs as a dependency.
-
-::::steps
-
-### Install
-
-First, we will install `vocs` as a dependency in our project.
-
-:::code-group
-
-```bash [npm]
-npm i vocs@next
+````mdx
+```js
+console.log("Not focused"); // Just span with `line`
+console.log("Focused"); // [!code focus] Here span tag has `line`, `focused`
+console.log("Not focused");
 ```
+````
 
-```bash [pnpm]
-pnpm i vocs@next
+### 4) Error warning level
+
+````mdx
+```ts
+console.log("No errors or warnings");
+console.error("Error"); // [!code error] Here span tag has `line`, `highlighted`, `error`
+console.warn("Warning"); // [!code warning] Here span tag has `line`, `highlighted`, `warning`
 ```
-
-```bash [yarn]
-yarn add vocs@next
-```
-
-```bash [bun]
-bun i vocs@next
-```
-
-:::
-
-### Add Scripts to `package.json`
-
-After that, let's add some scripts to our `package.json` for Vocs.
-
-```json [package.json]
-{
-  "name": "example",
-  "version": "0.0.0",
-  "scripts": {
-    // [!code focus]
-    "docs:dev": "vocs dev", // [!code focus]
-    "docs:build": "vocs build", // [!code focus]
-    "docs:preview": "vocs preview" // [!code focus]
-  } // [!code focus]
-}
-```
-
-### Build your First Page
-
-Create a directory called `docs`, and add a file inside of it called `index.mdx` under a `pages` directory:
-
-```md
-my-project/  
-├── docs/ <!-- [!code focus] -->
-│ ├── pages/ <!-- [!code focus] -->
-│ │ └── index.mdx <!-- [!code focus] -->
-├── node_modules/
-└── package.json
-```
-
-```markdown [docs/pages/index.mdx]
-# Hello, World! [This is my first page]
-
-Welcome to my docs.
-```
-
-### Run
-
-Next, run the development server:
-
-```bash [Terminal]
-npm run docs:dev
-```
-
-Then open up your browser to `http://localhost:5173`, and you can see your first page!
-
-### Next Steps
-
-Now that you have a basic documentation site up and running, you can learn more about how Vocs projects are structured in [Project Structure](/docs/structure).
-
-::::
+````

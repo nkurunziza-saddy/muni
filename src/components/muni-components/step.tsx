@@ -10,6 +10,7 @@ export type StepProps = {
   className?: string;
   title: ReactNode | string;
   titleLevel?: 2 | 3 | 4 | 5 | 6;
+  step: number;
 };
 
 export function Step({
@@ -17,6 +18,7 @@ export function Step({
   className,
   title,
   titleLevel = 2,
+  step,
 }: StepProps) {
   const HeadingComponent = {
     2: H2,
@@ -29,10 +31,8 @@ export function Step({
   return (
     <div className={`mb-6 ${className || ""}`}>
       <div className="relative">
-        {/* NOTE: The original CSS counter for step numbering has been removed. */}
-        {/* You may need to pass the step number as a prop to re-implement it. */}
-        <div className="absolute left-[-39px] top-[-0.25em] flex items-center justify-center w-7 h-7 bg-muted rounded-full border-[0.5em] border-background text-muted-foreground text-xs font-normal">
-          2
+        <div className="absolute left-[-39px] top-3 flex items-center justify-center size-9 bg-muted rounded-full border-[0.5em] border-background text-muted-foreground text-xs font-normal">
+          {step}
         </div>
         {typeof title === "string" ? (
           <HeadingComponent>{title}</HeadingComponent>

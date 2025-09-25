@@ -16,7 +16,9 @@ We will show you both approaches below.
 We will create a virtual file snippet called `example.ts`. We can define a virtual file in markdown using the `filename="example.ts"{:ts}` meta tag.
 
 ````mdx [example.md]
-```ts filename="example.ts" // [!code hl]
+// [!code highlight:1]
+
+```ts filename="example.ts"
 import { http, createPublicClient } from "viem";
 import { mainnet } from "viem/chains";
 
@@ -31,7 +33,7 @@ const client = createPublicClient({
 
 Next, we will import the snippet into our Markdown file using the `// [!include ...]` marker.
 
-````mdx [example.md]
+`````mdx [example.md]
 #### Create your Client
 
 ```ts filename="example.ts"
@@ -47,12 +49,15 @@ const client = createPublicClient({
 #### Use Actions
 
 ````ts // [!code focus]
-// [\!include example.ts] // [!code hl] // [!code focus]
+// [!code highlight:1]
+// [\!include example.ts]  // [!code focus]
 
 const blockNumber = await client.getBlockNumber() // [\!code focus] // [!code focus]
 ``` // [!code focus]
 ````
-````
+`````
+
+`````
 
 ### Output
 
@@ -105,18 +110,21 @@ Next, we will import the snippet into our Markdown file using the `// [!include 
 #### Create your Client
 
 ````ts // [!code focus]
-// [\!include ~/snippets/example.ts] // [!code hl] // [!code focus]
+// [!code highlight:1]
+// [\!include ~/snippets/example.ts]  // [!code focus]
 ``` // [!code focus]
 
 #### Use Actions
 
 ```ts // [!code focus]
-// [\!include ~/snippets/example.ts] // [!code hl] // [!code focus]
+// [!code highlight:1]
+// [\!include ~/snippets/example.ts]  // [!code focus]
 
 const blockNumber = await client.getBlockNumber() // [\!code focus] // [!code focus]
 ``` // [!code focus]
-````
-````
+`````
+
+`````
 
 :::info
 The `"~"` in the path refers to the [root (`config.rootDir`) directory](/docs/structure#root-directory) of the project.
@@ -184,7 +192,7 @@ import { writeFileSync } from "node:fs";
 
 writeFileSync("test.txt", blockNumber.toString());
 ```
-````
+`````
 
 Which will result in the snippet being rendered like this:
 
@@ -277,7 +285,8 @@ writeFileSync("test.txt", blockNumber.toString());
 
 ## Tip: Code Block Markers
 
-We can also include markers like [line highlight (`// [!code hl]`)](/docs/markdown#line-highlights) in our code snippets.
+(`// [!code highlight]`)](:1/
+We can also include markers like [line highlight docs/markdown#line-highlights) in our code snippets.
 
 :::code-group
 
@@ -352,13 +361,17 @@ We can also use virtual files with Twoslash code blocks.
 ````md [Markdown]
 :::code-group
 
-```ts twoslash [example.ts] // [!code hl]
+// [!code highlight:1]
+
+```ts twoslash [example.ts]
 import { client } from "./client.js";
 
 const blockNumber = await client.getBlockNumber();
 ```
 
-```ts twoslash [client.ts] filename="client.ts" // [!code hl]
+// [!code highlight:1]
+
+```ts twoslash [client.ts] filename="client.ts"
 import { http, createPublicClient } from "viem";
 import { mainnet } from "viem/chains";
 

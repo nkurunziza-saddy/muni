@@ -29,8 +29,10 @@ import { Details } from "./details";
 import { Div } from "./div";
 import { Header } from "./header";
 import { Figcaption } from "./figcaption";
+import { Callout } from "./alert";
 
 export const mdxComponents: MDXComponents = {
+  Callout,
   a: Anchor as any,
   aside: Aside,
   blockquote: Blockquote,

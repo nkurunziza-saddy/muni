@@ -1,5 +1,137 @@
-html[data-theme="dark"] .shiki,
-html[data-theme="dark"] .shiki span {
-  color: var(--shiki-dark) !important;
+@import "tailwindcss";
+
+.shiki {
+  background-color: var(--shiki-light-bg);
+  @apply rounded-sm text-sm;
+}
+
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+html.dark .shiki {
   background-color: var(--shiki-dark-bg) !important;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+@theme inline {
+  --color-sh-bg: var(--sh-bg);
+  --color-sh-fg: var(--sh-fg);
+  --radius-sm: calc(var(--sh-radius) - 4px);
+  --radius-md: calc(var(--sh-radius) - 2px);
+  --radius-lg: var(--sh-radius);
+  --radius-xl: calc(var(--sh-radius) + 4px);
+}
+
+:root {
+  --sh-bg: var(--shiki-light-bg);
+  --sh-fg: var(--shiki-light);
+  --sh-radius: var(--radius-md, 0.5rem);
+}
+
+.dark {
+  --sh-bg: var(--shiki-dark-bg);
+  --sh-fg: var(--shiki-dark);
+  --sh-radius: var(--radius-md, 0.5rem);
+}
+
+.shiki.has-diff .line.diff {
+  @apply relative pl-6;
+}
+
+.shiki .line.diff.add {
+  @apply relative bg-emerald-800/20;
+}
+
+.shiki .line.diff.add::before {
+  content: "+";
+  @apply absolute left-1 top-0 w-4 text-center font-semibold text-emerald-500 dark:text-emerald-700;
+}
+
+.shiki .line.diff.remove {
+  @apply relative bg-destructive/20;
+}
+
+.shiki .line.diff.remove::before {
+  content: "-";
+  @apply absolute left-1 top-0 w-4 text-center font-semibold text-destructive;
+}
+
+.shiki.has-highlighted .line.highlighted {
+  @apply bg-muted/60 backdrop-blur-3xl border border-border/80 px-1 rounded;
+}
+
+/* === WORD HIGHLIGHT STYLES === */
+.shiki .highlighted-word {
+  @apply bg-muted/60 backdrop-blur-3xl border border-border/80 px-1 rounded;
+}
+
+/* === FOCUS STYLES === */
+.shiki.has-focused .line:not(.focused) {
+  filter: blur(0.5px);
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.shiki.has-focused:hover .line:not(.focused) {
+  filter: blur(0px);
+  opacity: 0.8;
+}
+
+.shiki.has-focused .line.focused {
+  position: relative;
+  z-index: 1;
+}
+
+.shiki .line.highlighted.error {
+  @apply bg-destructive/20 border border-destructive/30 backdrop-blur-3xl;
+}
+
+.shiki .line.highlighted.warning {
+  @apply bg-warning/20 border border-warning/40 backdrop-blur-3xl;
+}
+
+.shiki.has-line-numbers,
+.shiki.line-numbers {
+  @apply pl-10 relative;
+}
+
+.shiki.has-line-numbers .line,
+.shiki.line-numbers .line {
+  @apply relative;
+}
+
+.shiki.has-line-numbers .line::before,
+.shiki.line-numbers .line::before {
+  content: attr(data-line-number);
+  @apply absolute left-8 w-2 text-right text-muted-foreground text-sm;
+}
+
+.shiki.has-line-numbers::before,
+.shiki.line-numbers::before {
+  content: "";
+  @apply absolute left-6 w-0.5 top-0 bottom-0 bg-muted;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shiki,
+  .shiki .line,
+  .shiki .highlighted-word {
+    transition: none;
+  }
+
+  .shiki.has-focused .line:not(.focused) {
+    filter: none;
+  }
 }

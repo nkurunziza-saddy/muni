@@ -11,7 +11,7 @@ export function Steps({ children }: { children: ReactNode }) {
           ? props.children
           : [props.children];
         return (
-          <Step key={i} title={title}>
+          <Step key={i} title={title} step={i + 1}>
             {children}
           </Step>
         );

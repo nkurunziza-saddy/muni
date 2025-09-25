@@ -12,7 +12,7 @@ import type { LanguageInput } from 'shiki/core'
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 
-const inlineShikiRegex = /(.*){:(.*)}$/
+const inlineShikiRegex = /(.*)#(.*)$/
 
 export type RehypeInlineShikiOptions = RehypeShikiCoreOptions & {
   /**

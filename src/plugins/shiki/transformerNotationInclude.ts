@@ -22,8 +22,13 @@ export const transformerNotationInclude = ({
       code,
       getSource(fileName) {
         if (!fileName.startsWith('~')) return undefined
-        const path = resolve(rootDir, fileName.replace('~', '.'))
-        return readFileSync(path, { encoding: 'utf-8' }).replace(/\n$/, '')
+        const path = resolve(rootDir, fileName.replace('~/', './'))
+        try {
+          return readFileSync(path, { encoding: 'utf-8' }).replace(/\n$/, '')
+        } catch (e) {
+          console.error(e)
+          return `// [!include] File not found: ${fileName}`
+        }
       },
     })
   },
@@ -34,11 +39,7 @@ export function processIncludes({
   getSource,
 }: { code: string; getSource: (fileName: string) => string | undefined }) {
   const includes = code.includes('// [!include')
-  if (!includes)
-    return code
-      .replaceAll(regionRegexLineGlobal, '')
-      .replaceAll(endRegionRegexLineGlobal, '')
-      .replace(/\n$/, '')
+  if (!includes) return code.replace(/\n$/, '')
 
   const lines = code.split('\n')
   let i = 0
@@ -62,7 +63,11 @@ export function processIncludes({
     }
     i++
   }
-  return lines.join('\n').replace(/\n$/, '')
+  return lines
+    .join('\n')
+    .replaceAll(regionRegexLineGlobal, '')
+    .replaceAll(endRegionRegexLineGlobal, '')
+    .replace(/\n$/, '')
 }
 
 function extractRegion(code: string, region: string | undefined) {

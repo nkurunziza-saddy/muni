@@ -4,6 +4,7 @@ import MDXWrapper from "@/components/mdx-wrapper";
 import { AlertTriangle, ArrowLeft, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
+import { DocsPagination } from "@/components/navigation/docs-pagination";
 
 export const Route = createFileRoute("/_docs-layout/docs/$")({
   component: MdxComponent,
@@ -104,12 +105,13 @@ function MdxComponent() {
   );
 
   return (
-    <div className="">
+    <div className="py-6">
       <Suspense fallback={<LoadingSkeleton />}>
         <MDXWrapper>
           <Component />
         </MDXWrapper>
       </Suspense>
+      <DocsPagination />
     </div>
   );
 }

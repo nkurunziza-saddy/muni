@@ -48,7 +48,7 @@ export function Pre({
   const wrap = (children: React.ReactNode) => {
     if (className?.includes("shiki")) {
       return (
-        <CodeBlock className="">
+        <CodeBlock className={cn(isTabContent ? "" : "my-4")}>
           {props["data-title"] && !isTabContent && (
             <CodeTitle language={props["data-lang"]}>
               {props["data-title"]}
@@ -64,11 +64,11 @@ export function Pre({
   return (
     <IsInCodeBlockContext.Provider value={true}>
       {wrap(
-        <div className="relative">
+        <div className="relative group">
           <pre
             ref={ref}
             {...props}
-            className={cn(className, "p-2 overflow-auto")}
+            className={cn(className, "p-2 overflow-auto custom-scrollbar")}
           >
             <CopyButton copied={copied} copy={copy} />
             {children_}

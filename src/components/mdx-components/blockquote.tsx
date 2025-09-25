@@ -11,7 +11,7 @@ export function Blockquote(
     <blockquote
       {...props}
       className={cn(
-        "border-l-2 bg-muted/80 border-primary pl-4 italic py-2 text-muted-foreground",
+        "border-l-2 bg-muted/80 border-primary p-4 italic text-muted-foreground",
         props.className
       )}
     >

@@ -17,7 +17,10 @@ export function CodeGroup({ children }: { children: ReactElement[] }) {
   });
 
   return (
-    <Tabs className={cn("border border-input")} defaultValue={tabs[0].tabTitle}>
+    <Tabs
+      className={cn("border border-input my-4")}
+      defaultValue={tabs[0].tabTitle}
+    >
       <TabsList
         className={cn(
           "bg-muted/40 backdrop-blur-3xl border-b flex px-2 sm:px-2"

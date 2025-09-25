@@ -22,9 +22,11 @@ import { rehypeInlineShiki } from "./src/plugins/rehype/inline-shiki";
 // Shiki transformers
 import {
   transformerNotationDiff,
+  transformerNotationErrorLevel,
   transformerNotationFocus,
   transformerNotationHighlight,
   transformerNotationWordHighlight,
+  transformerRemoveNotationEscape,
 } from "@shikijs/transformers";
 import { transformerLineNumbers } from "./src/plugins/shiki/transformerLineNumbers";
 import { transformerNotationInclude } from "./src/plugins/shiki/transformerNotationInclude";
@@ -44,6 +46,7 @@ import { remarkDetails } from "./src/plugins/remark/details";
 import { remarkSponsors } from "./src/plugins/remark/sponsors";
 import { remarkStrongBlock } from "./src/plugins/remark/strong-block";
 import { remarkInferFrontmatter } from "./src/plugins/remark/inferred-frontmatter";
+import { remarkAlert } from "./src/plugins/remark/alert";
 
 export default defineConfig({
   plugins: [
@@ -60,6 +63,7 @@ export default defineConfig({
         remarkMdxFrontmatter,
         remarkCode,
         remarkCodeGroup,
+        remarkAlert,
         remarkSteps,
         remarkSubheading,
         remarkFilename,
@@ -84,16 +88,18 @@ export default defineConfig({
           rehypeShiki,
           {
             themes: {
-              dark: "github-dark-dimmed",
+              dark: "vitesse-dark",
               light: "vitesse-light",
             },
             defaultColor: "light",
             transformers: [
+              transformerRemoveNotationEscape(),
               transformerLineNumbers(),
-              transformerNotationDiff(),
-              transformerNotationFocus(),
-              transformerNotationHighlight(),
-              transformerNotationWordHighlight(),
+              transformerNotationDiff({ matchAlgorithm: "v3" }),
+              transformerNotationFocus({ matchAlgorithm: "v3" }),
+              transformerNotationHighlight({ matchAlgorithm: "v3" }),
+              transformerNotationWordHighlight({ matchAlgorithm: "v3" }),
+              transformerNotationErrorLevel({ matchAlgorithm: "v3" }),
               transformerNotationInclude({
                 rootDir: path.resolve(__dirname, "./src"),
               }),
@@ -108,8 +114,8 @@ export default defineConfig({
           rehypeInlineShiki,
           {
             themes: {
-              dark: "github-dark",
-              light: "github-light",
+              dark: "vitesse-dark",
+              light: "vitesse-light",
             },
             defaultColor: "light",
           },
