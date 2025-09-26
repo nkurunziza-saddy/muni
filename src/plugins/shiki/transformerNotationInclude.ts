@@ -2,10 +2,10 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { ShikiTransformer } from "shiki";
 
-const includeRegex = /\/\/ \[!include (.*)\]/;
-const regionRegex = /\/\/ \[!region (.*)\]/;
+const includeRegex = /\/\/ \[!include ([^\]]+)\]/;
+const regionRegex = /\/\/ \[!region ([^\]]+)\]/;
 const regionRegexLineGlobal = /\/\/ \[!region (.*)\]\n/g;
-const endRegionRegex = /\/\/ \[!endregion (.*)\]/;
+const endRegionRegex = /\/\/ \[!endregion ([^\]]+)\]/;
 const endRegionRegexLineGlobal = /\/\/ \[!endregion (.*)\](\n|$)/g;
 
 export type TransformerNotationIncludeOptions = {
