@@ -13,7 +13,7 @@ export function SidebarRight({ headings }: { headings: any[] }) {
   useEffect(() => {
     const handleScroll = () => {
       let currentActiveId: string | null = null;
-      const fromTop = 150; // Offset from the top of the viewport
+      const fromTop = 150;
 
       for (const heading of headings) {
         const element = document.getElementById(heading.id);
@@ -30,7 +30,7 @@ export function SidebarRight({ headings }: { headings: any[] }) {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);

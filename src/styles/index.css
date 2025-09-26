@@ -9,6 +9,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --radius-full: clamp(0px, var(--radius) * 9999, 9999px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -120,16 +121,6 @@
   }
 }
 
-.prose :where(h1, h2, h3, p, ul, ol, blockquote, table) {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.prose :where(li) {
-  margin-top: 0.3rem;
-  margin-bottom: 0.3rem;
-}
-
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -151,4 +142,8 @@
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+}
+
+.mdx-block + .mdx-block {
+  @apply mt-6;
 }

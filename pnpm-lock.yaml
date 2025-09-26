@@ -165,6 +165,9 @@ importers:
       globals:
         specifier: ^16.4.0
         version: 16.4.0
+      mdast-util-directive:
+        specifier: ^3.1.0
+        version: 3.1.0
       shiki:
         specifier: ^3.13.0
         version: 3.13.0

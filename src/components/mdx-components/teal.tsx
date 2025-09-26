@@ -1,16 +1,16 @@
 import { cn } from "@/lib/utils";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
-export function TableRow(
+export function LeadParagraph(
   props: DetailedHTMLProps<
-    HTMLAttributes<HTMLTableRowElement>,
-    HTMLTableRowElement
+    HTMLAttributes<HTMLParagraphElement>,
+    HTMLParagraphElement
   >
 ) {
   return (
-    <tr
+    <p
       {...props}
-      className={cn("even:bg-muted m-0 border-t p-0", props.className)}
+      className={cn("text-muted-foreground text-xl", props.className)}
     />
   );
 }

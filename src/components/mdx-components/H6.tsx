@@ -1,5 +1,6 @@
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 import { Heading } from "./heading";
+import { cn } from "@/lib/utils";
 
 export function H6(
   props: DetailedHTMLProps<
@@ -10,7 +11,10 @@ export function H6(
   return (
     <Heading
       {...props}
-      className={`text-base font-semibold mt-4 mb-2 ${props.className || ""}`}
+      className={cn(
+        "scroll-m-20 text-base font-medium tracking-tight",
+        props.className
+      )}
       level={6}
     />
   );

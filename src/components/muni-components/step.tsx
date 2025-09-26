@@ -4,6 +4,7 @@ import { H3 } from "../mdx-components/H3";
 import { H4 } from "../mdx-components/H4";
 import { H5 } from "../mdx-components/H5";
 import { H6 } from "../mdx-components/H6";
+import { cn } from "@/lib/utils";
 
 export type StepProps = {
   children: ReactNode;
@@ -29,9 +30,9 @@ export function Step({
   }[titleLevel];
 
   return (
-    <div className={`mb-6 ${className || ""}`}>
+    <div className={cn("mb-7", className)}>
       <div className="relative">
-        <div className="absolute left-[-39px] top-3 flex items-center justify-center size-9 bg-muted rounded-full border-[0.5em] border-background text-muted-foreground text-xs font-normal">
+        <div className="absolute left-[-39px] -top-0.5 flex items-center justify-center size-[34px] bg-muted rounded-full border-[0.5em] border-background text-muted-foreground text-xs font-normal">
           {step}
         </div>
         {typeof title === "string" ? (

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import type { DetailedHTMLProps, ThHTMLAttributes } from "react";
 
 export function TableHeader(
@@ -9,7 +10,10 @@ export function TableHeader(
   return (
     <th
       {...props}
-      className={`p-3 border border-border bg-muted font-semibold text-left ${props.className || ''}`}
+      className={cn(
+        "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
+        props.className
+      )}
     />
   );
 }

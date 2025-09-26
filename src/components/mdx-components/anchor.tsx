@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 
-import { Autolink } from "./autolink.js";
+import { Autolink } from "./autolink";
 
 type AnchorProps = {
   children: ReactNode;
@@ -15,7 +15,6 @@ export function Anchor(props: AnchorProps) {
 
   const classes = "font-medium text-primary underline-offset-4 hover:underline";
 
-  // Heading slug links
   if (
     children &&
     typeof children === "object" &&
@@ -24,7 +23,6 @@ export function Anchor(props: AnchorProps) {
   )
     return <Autolink className={`${className} ${classes}`} {...props} />;
 
-  // ID links
   if (href?.match(/^#/))
     return (
       <a

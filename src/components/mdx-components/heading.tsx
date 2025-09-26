@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
 export function Heading({
@@ -11,7 +12,11 @@ export function Heading({
     <Component
       {...props}
       id={undefined}
-      className={`relative items-center font-semibold text-foreground gap-[0.25em] leading-[1.5em] ${props.className || ''}`}>
+      className={cn(
+        "relative items-center font-semibold text-foreground gap-[0.25em] leading-[1.5em]",
+        props.className
+      )}
+    >
       <div id={props.id} className="absolute top-0 invisible" />
       {props.children}
     </Component>

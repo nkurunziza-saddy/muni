@@ -16,7 +16,7 @@ export function CodeTitle({
       {...props}
       className={cn(
         "text-sm bg-muted/40 backdrop-blur-3xl",
-        "flex items-center gap-1.5 px-4 md:px-2 py-2 text-sm font-medium group-[.code-group]:hidden",
+        "flex items-center gap-1.5 px-1 md:px-2 py-2 text-sm font-medium group-[.code-group]:hidden",
         className
       )}
     >

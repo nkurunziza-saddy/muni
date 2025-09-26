@@ -12,7 +12,9 @@ export function Code(
       {...props}
       className={cn(
         "font-mono text-sm",
-        !isInCodeBlock && "bg-muted px-1.5 py-1 rounded-sm",
+        isInCodeBlock
+          ? ""
+          : "bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-medium",
         props.className
       )}
     >

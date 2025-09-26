@@ -1,8 +1,6 @@
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 import { Footnotes } from "./footnotes";
 
-// NOTE: Footnotes component is not yet refactored.
-
 export function Section(
   props: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
 ) {

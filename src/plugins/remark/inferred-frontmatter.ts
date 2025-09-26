@@ -3,38 +3,41 @@ import { visit } from "unist-util-visit";
 
 export function remarkInferFrontmatter() {
   return (tree: Root) => {
-    visit(tree, (node, _, parent) => {
+    visit(tree, (node, _, parent: any) => {
       if (parent?.type !== "root") return;
-
-      if (node.type === "heading" && node.depth === 1) {
-        if (node.children.length === 0) return;
-
-        const child = node.children[0];
-        if (!("value" in child)) return;
-
-        const value = child.value;
-        const [, title, description] = value.includes("[")
-          ? value.match(/(.*) \[(.*)\]/) || []
-          : [undefined, JSON.stringify(value)];
-
-        const frontmatterIndex = parent.children.findIndex(
-          (child) => child.type === "yaml"
-        );
-        const index = frontmatterIndex > 0 ? frontmatterIndex : 0;
-
-        const frontmatter = {
-          ...(parent.children[frontmatterIndex] || {
-            value: "",
-            type: "yaml",
-          }),
-        } as Yaml;
-        if (!frontmatter.value.includes("title"))
-          frontmatter.value += `\ntitle: ${title}\n`;
-        if (!frontmatter.value.includes("description"))
-          frontmatter.value += `\ndescription: ${description}\n`;
-
-        if (frontmatterIndex === -1) tree.children.unshift(frontmatter);
-        else parent.children.splice(index, 1, frontmatter);
+      if (node.type !== "heading" || node.depth !== 1) return;
+      if (!node.children?.length) return;
+      const child = node.children[0] as any;
+      if (!("value" in child)) return;
+      const value = (child.value as string).trim();
+      let title: string | undefined;
+      let description: string | undefined;
+      if (value.includes("[")) {
+        const m = value.match(/(.*) \[(.*)\]/);
+        if (m) {
+          title = m[1].trim();
+          description = m[2].trim();
+        }
+      } else {
+        title = value;
+      }
+      const frontmatterIndex = parent.children.findIndex(
+        (c: any) => c.type === "yaml"
+      );
+      if (frontmatterIndex === -1) {
+        const fm: Yaml = { type: "yaml", value: "" } as any;
+        if (title && !fm.value.includes("title"))
+          fm.value += `title: ${title}\n`;
+        if (description && !fm.value.includes("description"))
+          fm.value += `description: ${description}\n`;
+        tree.children.unshift(fm);
+      } else {
+        const fm = parent.children[frontmatterIndex] as Yaml;
+        fm.value = fm.value ?? "";
+        if (title && !fm.value.includes("title"))
+          fm.value += `\ntitle: ${title}\n`;
+        if (description && !fm.value.includes("description"))
+          fm.value += `description: ${description}\n`;
       }
     });
   };

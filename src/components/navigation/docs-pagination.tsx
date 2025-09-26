@@ -38,9 +38,9 @@ export function DocsPagination({ className }: { className?: string }) {
           <Link
             to="/docs/$"
             params={{ _splat: prevPage.slug }}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="flex items-end gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 mb-1" />
             <div>
               <div className="text-xs">Previous</div>
               <div>{prevPage.title}</div>
@@ -53,13 +53,13 @@ export function DocsPagination({ className }: { className?: string }) {
           <Link
             to="/docs/$"
             params={{ _splat: nextPage.slug }}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors text-right"
+            className="flex items-end gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors text-right"
           >
             <div>
               <div className="text-xs">Next</div>
               <div>{nextPage.title}</div>
             </div>
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 mb-1" />
           </Link>
         )}
       </div>

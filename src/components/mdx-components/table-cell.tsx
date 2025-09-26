@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import type { DetailedHTMLProps, TdHTMLAttributes } from "react";
 
 export function TableCell(
@@ -6,5 +7,13 @@ export function TableCell(
     HTMLTableCellElement
   >
 ) {
-  return <td {...props} className={`p-3 border border-border ${props.className || ''}`} />;
+  return (
+    <td
+      {...props}
+      className={cn(
+        "border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
+        props.className
+      )}
+    />
+  );
 }

@@ -1,5 +1,6 @@
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 import { Heading } from "./heading";
+import { cn } from "@/lib/utils";
 
 export function H3(
   props: DetailedHTMLProps<
@@ -7,12 +8,13 @@ export function H3(
     HTMLHeadingElement
   >
 ) {
-  // NOTE: The original complex selectors have been simplified.
-  const classes = "text-xl mt-4 pt-4 mb-6";
   return (
     <Heading
       {...props}
-      className={`${classes} ${props.className || ""}`}
+      className={cn(
+        "scroll-m-20 text-xl font-semibold tracking-tight",
+        props.className
+      )}
       level={3}
     />
   );

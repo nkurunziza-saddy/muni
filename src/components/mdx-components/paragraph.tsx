@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
 export function Paragraph(
@@ -6,5 +7,10 @@ export function Paragraph(
     HTMLParagraphElement
   >
 ) {
-  return <p {...props} className={`leading-7 mb-4 ${props.className || ''}`} />;
+  return (
+    <p
+      {...props}
+      className={cn("leading-7 [&:not(:first-child)]:mt-6", props.className)}
+    />
+  );
 }

@@ -100,26 +100,22 @@ html.dark .shiki span {
   @apply bg-warning/25 backdrop-blur-3xl;
 }
 
-.shiki.has-line-numbers,
-.shiki.line-numbers {
-  @apply pl-10 relative;
+.shiki.has-line-numbers {
+  @apply pl-12 relative;
 }
 
-.shiki.has-line-numbers .line,
-.shiki.line-numbers .line {
+.shiki.has-line-numbers .line {
   @apply relative;
 }
 
-.shiki.has-line-numbers .line::before,
-.shiki.line-numbers .line::before {
+.shiki.has-line-numbers .line::before {
   content: attr(data-line-number);
-  @apply absolute left-8 w-2 text-right text-muted-foreground text-sm;
+  @apply absolute -left-9 w-6 text-right text-muted-foreground/80 text-sm select-none;
 }
 
-.shiki.has-line-numbers::before,
-.shiki.line-numbers::before {
+.shiki.has-line-numbers::before {
   content: "";
-  @apply absolute left-6 w-0.5 top-0 bottom-0 bg-muted;
+  @apply absolute left-11 top-0 bottom-0 w-px bg-muted;
 }
 
 @media (prefers-reduced-motion: reduce) {

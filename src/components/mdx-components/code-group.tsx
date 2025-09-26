@@ -4,22 +4,21 @@ import { cn } from "@/lib/utils";
 import { IsInCodeBlockContext } from "@/lib/code-context";
 import { Pre } from "./pre";
 
-export function CodeGroup({ children }: { children: ReactElement[] }) {
+export function CodeGroup({ children }: { children: ReactElement<any>[] }) {
   if (!Array.isArray(children)) return null;
 
   const tabs = children.map((child_) => {
-    const child = child_.props["data-title"] ? child_ : child_.props.children;
-    const { props } = child;
-    const tabTitle = (props as { "data-title"?: string })[
-      "data-title"
-    ] as string;
+    const c = child_ as any;
+    const child = c.props?.["data-title"] ? c : c.props?.children;
+    const props = (child as any).props;
+    const tabTitle = props?.["data-title"] as string;
     return { tabTitle, props };
   });
 
   return (
     <Tabs
-      className={cn("border border-input my-4")}
-      defaultValue={tabs[0].tabTitle}
+      className={cn("border border-input")}
+      defaultValue={tabs[0]?.tabTitle}
     >
       <TabsList
         className={cn(
@@ -39,8 +38,9 @@ export function CodeGroup({ children }: { children: ReactElement[] }) {
           </TabsTrigger>
         ))}
       </TabsList>
+
       {tabs.map(({ tabTitle, props }, i) => {
-        const isShiki = props.className?.includes("shiki");
+        const isShiki = String(props?.className ?? "").includes("shiki");
 
         return (
           <IsInCodeBlockContext.Provider key={tabTitle || i} value={true}>
@@ -50,7 +50,7 @@ export function CodeGroup({ children }: { children: ReactElement[] }) {
               value={tabTitle}
               className={cn("")}
             >
-              <Pre isTabContent {...props} />
+              <Pre isTabContent {...(props as any)} />
             </TabsContent>
           </IsInCodeBlockContext.Provider>
         );

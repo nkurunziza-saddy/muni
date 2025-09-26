@@ -7,6 +7,7 @@ import {
 import type { ReactNode } from "react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
 const alertConfig = {
   note: {
@@ -45,14 +46,15 @@ export type CalloutProps = {
   children: ReactNode;
   type: keyof typeof alertConfig;
   title?: string;
+  className?: string;
 };
 
-export function Callout({ children, type, title }: CalloutProps) {
+export function Callout({ children, type, title, className }: CalloutProps) {
   const config = alertConfig[type];
   const Icon = config.icon;
 
   return (
-    <Alert variant={config.variant} className="not-prose my-4">
+    <Alert variant={config.variant} className={cn("not-prose", className)}>
       <Icon />
       <AlertTitle>{title ?? config.title}</AlertTitle>
       <AlertDescription>{children}</AlertDescription>

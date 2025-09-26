@@ -1,4 +1,4 @@
-import { Button } from "../../components/ui/button";
+import { Button } from "@/components/ui/button";
 
 # Code Block [Example code block]
 
@@ -14,7 +14,7 @@ const client = createPublicClient({
 });
 ```
 
-:::info
+:::success
 Info callout
 :::
 
@@ -47,7 +47,7 @@ export const client = createPublicClient({
 The following code block should include the content from `/src/snippets/example-for-test.ts`.
 
 ```ts [example.ts]
-// [!include ~/snippets/example-for-test.ts]
+// [!include ~/src/snippets/example.ts]
 ```
 
 ---
@@ -56,8 +56,8 @@ The following code block should include the content from `/src/snippets/example-
 
 You can add line numbers and highlight specific lines using meta options on a code block.
 
-```ts showLineNumbers {2,4-5} [example.ts]
-// [!include ~/snippets/example-for-test.ts]
+```ts showLineNumbers [example.ts]
+// [!include ~/src/snippets/example-for-test.ts]
 // This is an extra line for demonstration.
 // And another one.
 // Final line.

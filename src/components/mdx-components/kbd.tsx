@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
 export function Kbd(
@@ -6,7 +7,10 @@ export function Kbd(
   return (
     <kbd
       {...props}
-      className={`px-2 py-1 text-xs font-sans bg-muted border border-b-2 rounded-md ${props.className || ''}`}
+      className={cn(
+        "px-[0.3rem] py-[0.2rem] text-xs font-sans bg-muted border rounded-md",
+        props.className
+      )}
     />
   );
 }

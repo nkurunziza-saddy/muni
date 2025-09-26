@@ -1,58 +1,58 @@
-import type { RehypeShikiCoreOptions } from '@shikijs/rehype/core'
-import type { Root } from 'hast'
-import type {
-  BuiltinLanguage,
-  BuiltinTheme,
-  BundledLanguage,
-  BundledTheme,
-  HighlighterGeneric,
-} from 'shiki'
-import { bundledLanguages, getSingletonHighlighter } from 'shiki'
-import type { LanguageInput } from 'shiki/core'
-import type { Plugin } from 'unified'
-import { visit } from 'unist-util-visit'
+import type { RehypeShikiCoreOptions } from "@shikijs/rehype/core";
+import type { Root, Element } from "hast";
+import { getSingletonHighlighter, type LanguageInput } from "shiki";
+import type { Plugin } from "unified";
+import { visit } from "unist-util-visit";
 
-const inlineShikiRegex = /(.*)#(.*)$/
+const inlineShikiRegex = /(.+)#([\w-]+)$/;
 
 export type RehypeInlineShikiOptions = RehypeShikiCoreOptions & {
-  /**
-   * Language names to include.
-   *
-   * @default Object.keys(bundledLanguages)
-   */
-  langs?: Array<LanguageInput | BuiltinLanguage>
-}
-
-let promise: Promise<HighlighterGeneric<BundledLanguage, BundledTheme>>
+  langs?: LanguageInput[];
+};
 
 export const rehypeInlineShiki: Plugin<[RehypeInlineShikiOptions], Root> = (
-  options = {} as any,
+  options = {} as any
 ) => {
-  const themeNames = ('themes' in options ? Object.values(options.themes) : [options.theme]).filter(
-    Boolean,
-  ) as BuiltinTheme[]
-  const langs = options.langs || Object.keys(bundledLanguages)
+  const highlighterPromise = getSingletonHighlighter();
 
   return async (tree) => {
-    if (!promise)
-      promise = getSingletonHighlighter({
-        themes: themeNames,
-        langs,
-      })
-    const highlighter = await promise
-    return visit(tree, 'element', (node, index, parent) => {
-      if (node.tagName !== 'code') return
+    const highlighter = await highlighterPromise;
 
-      const match = (node.children[0] as any)?.value?.match(inlineShikiRegex)
-      if (!match) return
+    const themes = (
+      "themes" in options ? Object.values(options.themes) : [options.theme]
+    ).filter(Boolean);
+    await Promise.all(
+      themes.map((theme) => highlighter.loadTheme(theme as any))
+    );
+    if (options.langs) {
+      await Promise.all(
+        options.langs.map((lang) => highlighter.loadLanguage(lang as any))
+      );
+    }
 
-      const [, code, lang] = match
-      const hast = highlighter.codeToHast(code, { ...options, lang })
+    visit(tree, "element", (node, index, parent) => {
+      if (
+        node.tagName !== "code" ||
+        node.children[0]?.type !== "text" ||
+        !parent ||
+        index === undefined
+      )
+        return;
 
-      const inlineCode = (hast.children[0] as any).children[0]
-      if (!inlineCode) return
+      const match = node.children[0].value.match(inlineShikiRegex);
+      if (!match) return;
 
-      parent?.children.splice(index ?? 0, 1, inlineCode)
-    })
-  }
-}
+      const [, code, lang] = match;
+
+      if (!highlighter.getLoadedLanguages().includes(lang as any)) return;
+
+      const hast = highlighter.codeToHast(code, { ...options, lang });
+
+      const codeEl = (hast.children[0] as Element)?.children?.[0] as Element;
+      if (!codeEl) return;
+
+      codeEl.properties = { ...node.properties, ...codeEl.properties };
+      parent.children.splice(index, 1, codeEl);
+    });
+  };
+};

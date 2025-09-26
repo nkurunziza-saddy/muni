@@ -49,7 +49,7 @@ export function Pre({
     if (className?.includes("shiki")) {
       return (
         <CodeBlock
-          className={cn(isTabContent ? "" : "my-4 border border-input/80 ")}
+          className={cn(isTabContent ? "" : "border border-input/80 mb-6")}
         >
           {props["data-title"] && !isTabContent && (
             <CodeTitle language={props["data-lang"]}>

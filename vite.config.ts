@@ -17,7 +17,9 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeShiki from "@shikijs/rehype";
 import { h } from "hastscript";
 import { rehypeShikiDisplayNotation } from "./src/plugins/rehype/display-shiki-notation";
+import { rehypeBlockClass } from "./src/plugins/rehype/rehype-block";
 import { rehypeInlineShiki } from "./src/plugins/rehype/inline-shiki";
+import { rehypePreLineNumbers } from "./src/plugins/rehype/rehype-pre-line-numbers";
 
 // Shiki transformers
 import {
@@ -35,7 +37,7 @@ import { transformerEmptyLine } from "./src/plugins/shiki/transformerEmptyLine";
 import { transformerTagLine } from "./src/plugins/shiki/transformerTagLine";
 import { transformerSplitIdentifiers } from "./src/plugins/shiki/transformerSplitIdentifiers";
 
-// Remark plugins
+// Custom remark plugins
 import { remarkCode } from "./src/plugins/remark/code";
 import { remarkCodeGroup } from "./src/plugins/remark/code-group";
 import { remarkFilename } from "./src/plugins/remark/filename";
@@ -46,7 +48,7 @@ import { remarkDetails } from "./src/plugins/remark/details";
 import { remarkSponsors } from "./src/plugins/remark/sponsors";
 import { remarkStrongBlock } from "./src/plugins/remark/strong-block";
 import { remarkInferFrontmatter } from "./src/plugins/remark/inferred-frontmatter";
-import { remarkAlert } from "./src/plugins/remark/alert";
+import { remarkCallout } from "./src/plugins/remark/callout";
 
 export default defineConfig({
   plugins: [
@@ -63,7 +65,7 @@ export default defineConfig({
         remarkMdxFrontmatter,
         remarkCode,
         remarkCodeGroup,
-        remarkAlert,
+        remarkCallout,
         remarkSteps,
         remarkSubheading,
         remarkFilename,
@@ -101,7 +103,7 @@ export default defineConfig({
               transformerNotationWordHighlight({ matchAlgorithm: "v3" }),
               transformerNotationErrorLevel({ matchAlgorithm: "v3" }),
               transformerNotationInclude({
-                rootDir: path.resolve(__dirname, "./src"),
+                rootDir: path.resolve(__dirname, process.cwd()),
               }),
               transformerEmptyLine(),
               transformerTagLine(),
@@ -121,6 +123,8 @@ export default defineConfig({
           },
         ],
         rehypeShikiDisplayNotation,
+        rehypeBlockClass,
+        rehypePreLineNumbers,
       ],
       providerImportSource: "@mdx-js/react",
     }),
