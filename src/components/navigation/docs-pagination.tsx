@@ -31,11 +31,13 @@ export function DocsPagination({ className }: { className?: string }) {
     <div
       className={`flex items-center justify-between mt-12 pt-6 border-t ${
         className || ""
-      }`}>
+      }`}
+    >
       <div>
         {prevPage && (
           <Link
-            to={`/docs/${prevPage.slug}`}
+            to="/docs/$"
+            params={{ _splat: prevPage.slug }}
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -49,7 +51,8 @@ export function DocsPagination({ className }: { className?: string }) {
       <div>
         {nextPage && (
           <Link
-            to={`/docs/${nextPage.slug}`}
+            to="/docs/$"
+            params={{ _splat: nextPage.slug }}
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors text-right"
           >
             <div>

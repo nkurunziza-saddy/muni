@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 
-// NOTE: The Autolink component is not yet refactored.
 import { Autolink } from "./autolink.js";
 
 type AnchorProps = {

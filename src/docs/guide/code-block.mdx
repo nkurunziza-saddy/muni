@@ -1,3 +1,5 @@
+import { Button } from "../../components/ui/button";
+
 # Code Block [Example code block]
 
 We will create a simple example code block `tsx file`
@@ -106,6 +108,12 @@ console.log("A code block inside a step.");
 
 ---
 
-### Inline Code Highlighting
+### Importing components
 
-You can also highlight `code#ts` within a paragraph.
+You can import and use custom components within your MDX files.
+
+```tsx
+import { CustomComponent } from "../components/ui/Button";
+```
+
+<Button>Click Me</Button>

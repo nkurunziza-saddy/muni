@@ -1,5 +1,5 @@
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
-import { Callout, type CalloutProps } from "./alert";
+import { Callout, type CalloutProps } from "./alert-callout";
 import { cn } from "@/lib/utils";
 
 export function Aside(

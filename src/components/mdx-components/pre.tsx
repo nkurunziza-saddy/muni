@@ -48,7 +48,9 @@ export function Pre({
   const wrap = (children: React.ReactNode) => {
     if (className?.includes("shiki")) {
       return (
-        <CodeBlock className={cn(isTabContent ? "" : "my-4")}>
+        <CodeBlock
+          className={cn(isTabContent ? "" : "my-4 border border-input/80 ")}
+        >
           {props["data-title"] && !isTabContent && (
             <CodeTitle language={props["data-lang"]}>
               {props["data-title"]}

@@ -29,7 +29,7 @@ import { Details } from "./details";
 import { Div } from "./div";
 import { Header } from "./header";
 import { Figcaption } from "./figcaption";
-import { Callout } from "./alert";
+import { Callout } from "./alert-callout";
 
 export const mdxComponents: MDXComponents = {
   Callout,

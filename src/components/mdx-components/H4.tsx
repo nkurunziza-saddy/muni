@@ -7,7 +7,6 @@ export function H4(
     HTMLHeadingElement
   >
 ) {
-  // NOTE: The original complex selectors have been simplified.
   const classes = "text-lg mt-4 pt-3 mb-6";
   return (
     <Heading
